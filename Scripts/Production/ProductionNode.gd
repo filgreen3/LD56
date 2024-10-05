@@ -1,6 +1,8 @@
 @icon("res://Sprites/Production/producin_icon.png")
 class_name ProductionNode extends GridNode
 
+@export var enable : bool = true
+
 @export_category("Stats")
 @export var _product_speed : float = 1
 @export var _time_to_produce : float = 1

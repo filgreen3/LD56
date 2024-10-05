@@ -2,7 +2,12 @@ class_name DragAndDropSystem extends Node
 
 static var instance : DragAndDropSystem
 
+@export var storage_system : ProductionStorageSystem
+@export var y_hights_point : int = 96
+
 var current_dragable : DragableComponent
+var prev_pos : Vector2 
+var curr_pos : Vector2 
 
 func _ready() -> void:
 	instance = self
@@ -12,7 +17,7 @@ func get_mouse_point()->Vector2 :
 	
 	pos.x -= 240
 	pos.y -= 150
-	
+
 	pos.x = roundi(pos.x / GridNode.CLAMP_SCALE ) * GridNode.CLAMP_SCALE
 	pos.y = roundi(pos.y / GridNode.CLAMP_SCALE ) * GridNode.CLAMP_SCALE
 	return pos
@@ -28,12 +33,25 @@ func _process(delta: float) -> void:
 		_move()
 	
 func _move() -> void:
-	current_dragable._move(get_mouse_point())
+	curr_pos = get_mouse_point()
+	if (prev_pos - curr_pos).length_squared() > GridNode.CLAMP_SCALE * GridNode.CLAMP_SCALE:
+		pass
+		#current_dragable.shock_scale()
+	current_dragable._move(curr_pos)
 	
 func take(dragable : DragableComponent ) -> void :
 	current_dragable = dragable
+	storage_system.remove_factory(current_dragable._productor)
+	prev_pos = current_dragable._get_pos()
 
 func drop() -> void :
+	if curr_pos.y > y_hights_point :
+		storage_system.add_factory(current_dragable._productor)
+	else :
+		var remain_pos : Vector2 = curr_pos
+		while (current_dragable._get_pos() - remain_pos).length_squared()>0.1:
+			await get_tree().process_frame
+			current_dragable._move(remain_pos)
 	current_dragable = null
 	
 func can_take(dragble : DragableComponent) -> bool :

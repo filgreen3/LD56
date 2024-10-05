@@ -19,7 +19,7 @@ func _init_production(productor : ProductionNode) -> void:
 func _spawning_process() -> void:
 	while true:
 		await get_tree().create_timer(time_to_spawn()).timeout
-		if count > 0:
+		if count > 0 && _productor.enable:
 			_spawn()
 			count -= 1
 		
