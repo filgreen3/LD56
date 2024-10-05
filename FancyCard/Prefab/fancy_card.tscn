@@ -1,0 +1,225 @@
+[gd_scene load_steps=20 format=3 uid="uid://btpr1dak47fjl"]
+
+[ext_resource type="Theme" uid="uid://mqnr7ydobpyw" path="res://FancyCard/Theme/card_theme.tres" id="1_b57kx"]
+[ext_resource type="Script" path="res://FancyCard/Scripts/fancy_card.gd" id="1_ldnwi"]
+[ext_resource type="StyleBox" uid="uid://wrf6q5mhskm6" path="res://FancyCard/Theme/card_panel_box_texture.tres" id="2_hdu2p"]
+[ext_resource type="Texture2D" uid="uid://d23lb06c5tf3e" path="res://FancyCard/Sprite/OldCards/cards1.png" id="3_2bhtr"]
+[ext_resource type="Texture2D" uid="uid://bddtm4r4dc0ip" path="res://FancyCard/Sprite/tilemap.png" id="3_nwwpf"]
+[ext_resource type="Shader" uid="uid://bfag1hqby0ss4" path="res://FancyCard/Theme/uv_slide_canvas_shader.tres" id="4_54crs"]
+[ext_resource type="Texture2D" uid="uid://orql3lke86mb" path="res://FancyCard/Sprite/OldCards/cards5.png" id="5_se4o4"]
+[ext_resource type="Texture2D" uid="uid://b2nf5n6nh2l67" path="res://FancyCard/Sprite/SpritePattern/pattern_84.png" id="6_fpo3h"]
+[ext_resource type="FontFile" uid="uid://bdhrg06aq51fd" path="res://FancyDialog/Not Jam UI Condensed 16.ttf" id="7_012a5"]
+[ext_resource type="Texture2D" uid="uid://cd12uecetey45" path="res://FancyCard/Sprite/SpritePattern/pattern_16.png" id="8_rprva"]
+[ext_resource type="Script" path="res://FancyCard/Scripts/card_rotator.gd" id="11_6xtht"]
+[ext_resource type="Script" path="res://FancyCard/Scripts/card_mouse_rise.gd" id="12_b2383"]
+[ext_resource type="Script" path="res://FancyCard/Scripts/card_scale.gd" id="13_fo457"]
+[ext_resource type="Script" path="res://FancyCard/Scripts/card_mouse_click.gd" id="14_evx0j"]
+[ext_resource type="Script" path="res://FancyCard/Scripts/filp_card.gd" id="15_wbopb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tvej5"]
+shader = ExtResource("4_54crs")
+shader_parameter/OffsetMove = Vector2(2.08165e-12, 0.01)
+shader_parameter/Scale = 1.0
+shader_parameter/DEF_TEXTURE = ExtResource("5_se4o4")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr7ba"]
+atlas = ExtResource("3_nwwpf")
+region = Rect2(21, 9, 18, 10)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pp4pc"]
+shader = ExtResource("4_54crs")
+shader_parameter/OffsetMove = Vector2(0.01, 0.01)
+shader_parameter/Scale = 1.0
+shader_parameter/DEF_TEXTURE = ExtResource("8_rprva")
+
+[sub_resource type="Curve" id="Curve_vbqhd"]
+_data = [Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[node name="FancyCard" type="MarginContainer" node_paths=PackedStringArray("icon", "title", "text")]
+custom_minimum_size = Vector2(48, 64)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_ldnwi")
+icon = NodePath("Center/AnchorVisual/CardPanel/Icon")
+title = NodePath("Center/AnchorVisual/CardPanel/Title")
+text = NodePath("Center/AnchorVisual/CardPanel/MainText")
+
+[node name="Center" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AnchorVisual" type="Control" parent="Center"]
+layout_mode = 2
+anchors_preset = 0
+pivot_offset = Vector2(-4, -6.33334)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CardPanel" type="TextureRect" parent="Center/AnchorVisual"]
+layout_mode = 1
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 16.0
+offset_bottom = 24.0
+scale = Vector2(3, 3)
+pivot_offset = Vector2(20, 26.037)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_b57kx")
+texture = ExtResource("3_2bhtr")
+stretch_mode = 2
+
+[node name="Pattern" type="TextureRect" parent="Center/AnchorVisual/CardPanel"]
+modulate = Color(1, 1, 1, 0.482353)
+material = SubResource("ShaderMaterial_tvej5")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 56.0
+texture = ExtResource("5_se4o4")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Icon" type="TextureRect" parent="Center/AnchorVisual/CardPanel"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 36.0
+offset_bottom = 53.0
+texture = SubResource("AtlasTexture_pr7ba")
+stretch_mode = 3
+
+[node name="Title" type="Label" parent="Center/AnchorVisual/CardPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -11.642
+offset_right = 20.0
+offset_bottom = -3.642
+grow_horizontal = 2
+theme = ExtResource("1_b57kx")
+theme_override_colors/font_shadow_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_fonts/font = ExtResource("7_012a5")
+theme_override_font_sizes/font_size = 8
+text = "Title"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="MainText" type="Label" parent="Center/AnchorVisual/CardPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = 14.0
+offset_right = 52.0
+offset_bottom = 67.83
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_b57kx")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("7_012a5")
+theme_override_font_sizes/font_size = 8
+text = "This plant is the most cool thing in game. You can plant it anywhere and any time you wants"
+horizontal_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="BackPanel" type="TextureRect" parent="Center/AnchorVisual"]
+custom_minimum_size = Vector2(40, 56)
+layout_mode = 0
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 16.0
+offset_bottom = 24.0
+scale = Vector2(3, 3)
+pivot_offset = Vector2(20, 26)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_b57kx")
+texture = ExtResource("5_se4o4")
+
+[node name="Pattern" type="TextureRect" parent="Center/AnchorVisual/BackPanel"]
+modulate = Color(1, 1, 1, 0.0156863)
+material = SubResource("ShaderMaterial_pp4pc")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 56.0
+texture = ExtResource("6_fpo3h")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="AnchorInput" type="Control" parent="Center"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = -24.0
+offset_top = -32.0
+offset_right = -24.0
+offset_bottom = -32.0
+pivot_offset = Vector2(44, 58)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="InputPanel" type="Panel" parent="Center/AnchorInput"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 56.0
+scale = Vector2(3, 3)
+pivot_offset = Vector2(20.3333, 24.6667)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_b57kx")
+theme_override_styles/panel = ExtResource("2_hdu2p")
+
+[node name="CardRotation" type="Node" parent="." node_paths=PackedStringArray("_card_panel")]
+script = ExtResource("11_6xtht")
+_card_panel = NodePath("../Center/AnchorVisual")
+
+[node name="CardMouseRise" type="Node" parent="." node_paths=PackedStringArray("_input_panel", "_card_scale", "_card_panel")]
+script = ExtResource("12_b2383")
+_offset_y = 36.0
+_speed_move = 10.0
+_scale_mul = 0.0
+_input_panel = NodePath("../Center/AnchorInput/InputPanel")
+_card_scale = NodePath("../CardScale")
+_card_panel = NodePath("../Center/AnchorVisual")
+
+[node name="CardScale" type="Node" parent="." node_paths=PackedStringArray("_card_panel")]
+script = ExtResource("13_fo457")
+_scale_amount_cange_speed = 4.0
+_scale_drag = 0.25
+_card_panel = NodePath("../Center/AnchorVisual")
+
+[node name="CardMouseClick" type="Node" parent="." node_paths=PackedStringArray("_input_panel", "_card_scale", "_fancy_card", "_card_panel")]
+script = ExtResource("14_evx0j")
+_scale_mul = 0.0
+_input_panel = NodePath("../Center/AnchorInput/InputPanel")
+_card_scale = NodePath("../CardScale")
+_fancy_card = NodePath("..")
+_card_panel = NodePath("../Center/AnchorVisual")
+
+[node name="FlipCard" type="Node" parent="." node_paths=PackedStringArray("_card_front", "_card_back", "_title_text", "_main_text", "_input_panel", "_fancy_card", "_card_panel")]
+script = ExtResource("15_wbopb")
+_speed_change = 2.0
+_card_front = NodePath("../Center/AnchorVisual/CardPanel")
+_card_back = NodePath("../Center/AnchorVisual/BackPanel")
+_title_text = NodePath("../Center/AnchorVisual/CardPanel/Title")
+_main_text = NodePath("../Center/AnchorVisual/CardPanel/MainText")
+_input_panel = NodePath("../Center/AnchorInput/InputPanel")
+_curve = SubResource("Curve_vbqhd")
+_fancy_card = NodePath("..")
+_card_panel = NodePath("../Center/AnchorVisual/CardPanel")

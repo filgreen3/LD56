@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://cj6cl7g0fhq6d"]
+
+[ext_resource type="PackedScene" uid="uid://btpr1dak47fjl" path="res://FancyCard/Prefab/fancy_card.tscn" id="1_1dnsp"]
+[ext_resource type="Shader" uid="uid://bfag1hqby0ss4" path="res://FancyCard/Theme/uv_slide_canvas_shader.tres" id="1_tj8m4"]
+[ext_resource type="Script" path="res://Script/UI/CardShower.gd" id="1_v5het"]
+[ext_resource type="Texture2D" uid="uid://cd12uecetey45" path="res://FancyCard/Sprite/SpritePattern/pattern_16.png" id="3_cb407"]
+[ext_resource type="Texture2D" uid="uid://b2nf5n6nh2l67" path="res://FancyCard/Sprite/SpritePattern/pattern_84.png" id="3_oft2j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_samii"]
+shader = ExtResource("1_tj8m4")
+shader_parameter/OffsetMove = Vector2(0.05, -0.05)
+shader_parameter/Scale = 4.0
+shader_parameter/DEF_TEXTURE = ExtResource("3_cb407")
+
+[sub_resource type="Gradient" id="Gradient_1utoo"]
+offsets = PackedFloat32Array(0.571192, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.462745)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tkax6"]
+gradient = SubResource("Gradient_1utoo")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[node name="FancyCardDemo" type="Control" node_paths=PackedStringArray("card_parent")]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v5het")
+card_prefab = ExtResource("1_1dnsp")
+card_parent = NodePath("HBoxContainer")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2757, 0.2757, 0.2757, 1)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+modulate = Color(1, 1, 1, 0.0156863)
+material = SubResource("ShaderMaterial_samii")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_oft2j")
+stretch_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+modulate = Color(0.231373, 0, 0.235294, 0.576471)
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_tkax6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(395.49, 100)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_right = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FancyCard" parent="HBoxContainer" instance=ExtResource("1_1dnsp")]
+layout_mode = 2
+
+[node name="FancyCard2" parent="HBoxContainer" instance=ExtResource("1_1dnsp")]
+layout_mode = 2
+
+[node name="FancyCard3" parent="HBoxContainer" instance=ExtResource("1_1dnsp")]
+layout_mode = 2

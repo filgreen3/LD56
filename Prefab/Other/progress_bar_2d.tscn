@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8vm0pksqbckb"]
+
+[ext_resource type="Script" path="res://Scripts/Utility/ProgressBar2D.gd" id="1_byis7"]
+[ext_resource type="Texture2D" uid="uid://dfc5jfgbp2ran" path="res://Sprites/Production/bar_back.png" id="2_dgc8w"]
+[ext_resource type="Texture2D" uid="uid://p5ow4vtdf3ha" path="res://Sprites/Production/bar_over.png" id="3_ntq3q"]
+[ext_resource type="Texture2D" uid="uid://dm4t20aub7l4w" path="res://Sprites/Production/bar_back_transparent.png" id="4_rmoh7"]
+
+[node name="ProgressBar2D" type="Node2D" node_paths=PackedStringArray("front_bar")]
+clip_children = 2
+position = Vector2(0, -32)
+script = ExtResource("1_byis7")
+front_bar = NodePath("BarBack/BarOver")
+
+[node name="BarBack" type="Sprite2D" parent="."]
+clip_children = 2
+texture = ExtResource("2_dgc8w")
+
+[node name="BarOver" type="Sprite2D" parent="BarBack"]
+position = Vector2(-23, 0)
+texture = ExtResource("3_ntq3q")
+
+[node name="BarOver2" type="Sprite2D" parent="BarBack"]
+texture = ExtResource("4_rmoh7")

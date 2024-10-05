@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=3 uid="uid://bw4v4p23iayqm"]
+
+[ext_resource type="Script" path="res://FancyDialog/FancyDialogDrawer.gd" id="1_fw4w4"]
+[ext_resource type="FontFile" uid="uid://bdhrg06aq51fd" path="res://FancyDialog/Not Jam UI Condensed 16.ttf" id="2_kwh75"]
+[ext_resource type="Script" path="res://FancyDialog/rich_text_char_shake.gd" id="3_siuae"]
+[ext_resource type="AudioStream" uid="uid://dmgkwa1moswqg" path="res://FancyDialog/sample.wav" id="4_j6uwv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gc6h"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+anti_aliasing_size = 0.01
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_m1ebl"]
+script = ExtResource("3_siuae")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yfdod"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("4_j6uwv")
+
+[node name="FancyDialog" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_fw4w4")
+
+[node name="DialogWindow" type="Control" parent="."]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="ColorRect" parent="DialogWindow"]
+custom_minimum_size = Vector2(0, 116)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -116.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.32549)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DialogWindow"]
+custom_minimum_size = Vector2(0, 116)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -52.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("2_kwh75")
+theme_override_font_sizes/normal_font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_3gc6h")
+bbcode_enabled = true
+text = "[charshake freq=.0 span=0.6 amp=3]Hi! Can you read this? Yes? Oh, that mean it is fully working. That mean it is ready for game development. Dose it shake or move? Is it fancy font? Or is it have animation?[/charshake]"
+fit_content = true
+scroll_following = true
+autowrap_mode = 2
+tab_size = 2
+custom_effects = [SubResource("RichTextEffect_m1ebl")]
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+visible_characters_behavior = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_yfdod")
+pitch_scale = 2.0

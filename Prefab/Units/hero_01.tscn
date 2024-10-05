@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dv38wxw6upeag"]
+
+[ext_resource type="Script" path="res://Scripts/Units/UnitNode.gd" id="1_e6xkc"]
+[ext_resource type="Texture2D" uid="uid://d0ub55aoqgbld" path="res://Sprites/Other/Kenney 1-Bit Art/Tiles/Transparent/tile_0281.png" id="2_nwad7"]
+[ext_resource type="Script" path="res://Scripts/Units/UnitRotator.gd" id="3_k5kbx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtso2"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lma2c"]
+radius = 5.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bohqr"]
+size = Vector2(16, 16)
+
+[node name="Hero" type="CharacterBody2D" node_paths=PackedStringArray("_shape")]
+motion_mode = 1
+script = ExtResource("1_e6xkc")
+_shape = NodePath("ShapeCast2D")
+y_lowest_point = -128.0
+y_heights_point = 96.0
+
+[node name="Tile0260" type="Sprite2D" parent="."]
+texture = ExtResource("2_nwad7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gtso2")
+disabled = true
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+position = Vector2(16, 0)
+shape = SubResource("CircleShape2D_lma2c")
+target_position = Vector2(0, 0)
+max_results = 1
+collide_with_areas = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_bohqr")
+
+[node name="UnitRotator" type="Node" parent="." node_paths=PackedStringArray("node_to_shake")]
+script = ExtResource("3_k5kbx")
+node_to_shake = NodePath("../Tile0260")
+max_scale = Vector2(0.9, 1.1)
+release_time = 0.7
+max_angle = 0.167
+rotate_time = 2.0
