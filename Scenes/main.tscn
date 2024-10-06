@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c60458q6q61od"]
+[gd_scene load_steps=26 format=3 uid="uid://c60458q6q61od"]
 
 [ext_resource type="Script" path="res://Scripts/Grid/GridSystem.gd" id="1_g2efd"]
 [ext_resource type="Texture2D" uid="uid://du31kcd836ggc" path="res://Sprites/Other/Patterns by Kenney/pattern_15.png" id="1_le6x0"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://Scripts/Progress/TimeSystem.gd" id="14_xs5pf"]
 [ext_resource type="PackedScene" uid="uid://3n0tw1igmbp3" path="res://Prefab/Producers/power_mul.tscn" id="16_nktsf"]
 [ext_resource type="Script" path="res://Scripts/Progress/EnemyGeneratorSystem.gd" id="17_ivjbn"]
+[ext_resource type="PackedScene" uid="uid://3y6y1esq8jkh" path="res://Prefab/Producers/t_shape.tscn" id="17_vl0yn"]
 
 [sub_resource type="Gradient" id="Gradient_ugcva"]
 offsets = PackedFloat32Array(0.00309598, 1)
@@ -146,7 +147,7 @@ red_color = Color(0.796078, 0.121569, 0.207843, 1)
 
 [node name="RewardFromQuotaSystem" type="Node" parent="Systems" node_paths=PackedStringArray("quota_system", "storage_system")]
 script = ExtResource("13_ya41l")
-factory_array = Array[PackedScene]([ExtResource("7_odafh"), ExtResource("2_fv2y0"), ExtResource("8_wxjsg"), ExtResource("7_2geyp"), ExtResource("16_nktsf")])
+factory_array = Array[PackedScene]([ExtResource("7_odafh"), ExtResource("2_fv2y0"), ExtResource("8_wxjsg"), ExtResource("7_2geyp"), ExtResource("16_nktsf"), ExtResource("17_vl0yn")])
 quota_system = NodePath("../QuotaSystem")
 storage_system = NodePath("../ProductionStorageSystem")
 
