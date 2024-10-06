@@ -11,11 +11,12 @@ _product_speed = 10.0
 visible = false
 
 [node name="ProductionProgressBar" parent="." index="3"]
-time_def = 10.0
+start_progress_from_start = true
+time_def = 2.0
 
 [node name="SpawnerComponent" type="Node" parent="." index="5"]
 script = ExtResource("8_5s86s")
-time_to_spawn_setting = 10.0
+time_to_spawn_setting = 2.0
 spawn_prefab = ExtResource("9_vya1x")
 count = 99999
 

@@ -52,6 +52,7 @@ func take(dragable : DragableComponent ) -> void :
 	storage_system.remove_factory(current_dragable._productor)
 	prev_pos = current_dragable._get_pos()
 	on_take.emit(current_dragable)
+	current_dragable._productor.on_taken_to_drag.emit()
 
 func is_bad_place()->bool:
 	return !MoveLimitSystem.instance.is_in_limit(curr_pos) || current_dragable.is_overlapping()
@@ -67,6 +68,7 @@ func drop() -> void :
 			current_dragable._move(remain_pos)
 		current_dragable._productor._put_on_map()
 	on_drop.emit(current_dragable)
+	current_dragable._productor.on_drop_to_drag.emit()
 	current_dragable = null
 	
 	

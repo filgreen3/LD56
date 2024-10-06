@@ -9,7 +9,7 @@ signal on_get_score(value : int)
 @export var current_score : int = 0 : 
 	set (value) :
 		current_score = value
-		score_lable.text = " Score : "+str(value)
+		score_lable.text = " Score : "+FancyNumber.format_number(value)
 @export var quota_system : QuotaSystem
 @export var scale_shock : Vector2 = Vector2(1.2,1.2)
 @export var scale_shock_parent : Control

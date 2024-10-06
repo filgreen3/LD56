@@ -15,7 +15,7 @@ var current_quota : int = 5
 var display_quota : int :
 	set (value) :
 		display_quota = value
-		quota_lable.text = str(display_quota) + " : Quota "
+		quota_lable.text = FancyNumber.format_number(display_quota) + " : Quota "
 		
 var max_quota : int = 10
 var levels_pass : int = 1 
@@ -33,7 +33,7 @@ func update_quota(score_added : int) -> void:
 		current_quota = 0
 		levels_pass += 1
 		quota_pass.emit(max_quota)
-		max_quota = 5 + levels_pass * levels_pass
+		max_quota = 5 + pow(levels_pass,levels_pass *0.1)
 		current_quota = max_quota
 	if score_added < 0:
 		shock_animation(quota_lable_scale_parent)

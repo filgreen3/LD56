@@ -8,7 +8,7 @@ const STANDART_OFFSET : float = 16
 		if value < 0:
 			value = 0
 		_power = value
-		_power_display.text = str(value)
+		_power_display.text = FancyNumber.format_number(value)
 	
 @export var _basic_speed : int = 1
 
@@ -93,13 +93,13 @@ func get_new_target_pos()->void:
 
 func check_for_empty_space() -> void:
 	get_new_target_pos()
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.5).timeout
 	if check_if_next_is_enemy():
 		return
 	while _shape.is_colliding() && !check_if_next_is_enemy() :
 		get_new_target_pos()
 		if !_self_shape_cast.is_colliding():
-			await get_tree().create_timer(0.5).timeout
+			await get_tree().create_timer(0.2).timeout
 		else:
 			await get_tree().process_frame 
 			

@@ -16,6 +16,10 @@ var _comps : Array[ProducitonComponent]
 
 signal on_unit_put(unitNode : UnitNode)
 signal on_unit_release(unitNode : UnitNode)
+
+signal on_taken_to_drag
+signal on_drop_to_drag
+
  
 func _ready() -> void:
 	for child : Node in get_children() :

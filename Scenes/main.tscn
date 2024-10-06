@@ -114,7 +114,7 @@ speed = 10.0
 
 [node name="InitialProductions" type="Node" parent="Systems" node_paths=PackedStringArray("fabric_storage")]
 script = ExtResource("6_tcptn")
-fabrics_prefabs = Array[PackedScene]([ExtResource("7_2geyp"), ExtResource("8_wxjsg")])
+fabrics_prefabs = Array[PackedScene]([ExtResource("7_odafh"), ExtResource("16_nktsf")])
 fabric_storage = NodePath("../ProductionStorageSystem")
 
 [node name="ArrowShowerSystem" type="Node" parent="Systems" node_paths=PackedStringArray("dragSystem")]
@@ -147,7 +147,7 @@ red_color = Color(0.796078, 0.121569, 0.207843, 1)
 
 [node name="RewardFromQuotaSystem" type="Node" parent="Systems" node_paths=PackedStringArray("quota_system", "storage_system")]
 script = ExtResource("13_ya41l")
-factory_array = Array[PackedScene]([ExtResource("7_odafh"), ExtResource("2_fv2y0"), ExtResource("8_wxjsg"), ExtResource("7_2geyp"), ExtResource("16_nktsf"), ExtResource("17_vl0yn")])
+factory_array = Array[PackedScene]([ExtResource("7_odafh"), ExtResource("2_fv2y0"), ExtResource("8_wxjsg"), ExtResource("7_2geyp"), ExtResource("16_nktsf"), ExtResource("17_vl0yn"), ExtResource("7_odafh"), ExtResource("7_odafh"), ExtResource("16_nktsf")])
 quota_system = NodePath("../QuotaSystem")
 storage_system = NodePath("../ProductionStorageSystem")
 
@@ -254,4 +254,4 @@ text = "45"
 horizontal_alignment = 1
 
 [node name="Spawner" parent="." instance=ExtResource("2_fv2y0")]
-position = Vector2(8, 104)
+position = Vector2(231, 104)

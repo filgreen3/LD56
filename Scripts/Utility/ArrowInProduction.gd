@@ -1,10 +1,9 @@
-class_name ArrowInProduction extends Node2D
+class_name ArrowInProduction extends ProducitonComponent
 
-@export var _production : ProductionNode
+@export var my_node : Node2D
 
-func _ready() -> void:
-	if ArrowShowerSystem.instance == null:
-		await get_tree().create_timer(0.1).timeout
-	ArrowShowerSystem.instance.on_show_arrow.connect(func()->void:visible=_production.enable)
-	ArrowShowerSystem.instance.on_hide_arrow.connect(func()->void:visible=false)
 	
+func _init_production(productor : ProductionNode) -> void:
+	super._init_production(productor)
+	productor.on_taken_to_drag.connect(func()->void: my_node.visible = true)
+	productor.on_drop_to_drag.connect(func()->void: my_node.visible = false)

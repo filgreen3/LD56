@@ -4,7 +4,7 @@ class_name SpawnerComponent extends ProducitonComponent
 @export var spawn_prefab : PackedScene
 @export var count : int = 2
 
-var timer : Timer
+var current_time_to_spawn : float = 0 
 
 func time_to_spawn() -> float: 
 	var result : float = time_to_spawn_setting / _productor._product_speed
@@ -14,15 +14,15 @@ func time_to_spawn() -> float:
 
 func _init_production(productor : ProductionNode) -> void:
 	super._init_production(productor)
-	_spawning_process()
+	current_time_to_spawn = time_to_spawn_setting
 
-func _spawning_process() -> void:
-	while true:
-		await get_tree().create_timer(time_to_spawn()).timeout
-		if count > 0 && _productor.enable :
+func _physics_process(delta: float) -> void:
+	if _productor.enable :
+		current_time_to_spawn -= delta
+		if current_time_to_spawn < 0:
 			_spawn()
-			count -= 1
-		
+			current_time_to_spawn = time_to_spawn_setting
+	
 func _spawn() -> void:
 	var new_hero : UnitNode = spawn_prefab.instantiate() as UnitNode
 	get_tree().current_scene.add_child(new_hero)

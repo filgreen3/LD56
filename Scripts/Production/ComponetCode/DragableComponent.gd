@@ -1,6 +1,6 @@
 class_name DragableComponent extends ProducitonComponent
 
-const MOVE_DRAG_SPEED : float = 0.1
+const MOVE_DRAG_SPEED : float = 0.2
 
 
 @export var area : Area2D

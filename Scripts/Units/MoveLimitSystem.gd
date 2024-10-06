@@ -11,8 +11,8 @@ static var instance : MoveLimitSystem
 		if value > y_high_max :
 			value = y_high_max
 		y_high_limit = value
-		if(get_tree()!=null):
-			get_tree().create_tween().tween_property(line_high,"global_position",Vector2.DOWN*value,0.5)
+		if(is_inside_tree()):
+			get_tree().create_tween().tween_property(line_high,"global_position",Vector2.DOWN*value,0.1)
 @export var line_high : Node2D
 
 
@@ -21,8 +21,8 @@ static var instance : MoveLimitSystem
 		if value < y_low_max :
 			value = y_low_max
 		y_low_limit = value
-		if(get_tree()!=null):
-			get_tree().create_tween().tween_property(line_low,"global_position",Vector2.DOWN*value,0.5)
+		if(is_inside_tree()):
+			get_tree().create_tween().tween_property(line_low,"global_position",Vector2.DOWN*value,0.1)
 @export var line_low : Node2D
 
 

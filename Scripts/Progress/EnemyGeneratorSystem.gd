@@ -8,17 +8,18 @@ class_name EnemyGeneratorSystem extends Node
 @export var quota_system : QuotaSystem
 @export var move_system : MoveLimitSystem
 
-func enemy_power_formule(level : int) -> int :  return pow(level, 2)
+func enemy_power_formule(level : int) -> int :  return pow(level, 1.5)
 
-func get_power_for_enemy(level : int) -> int : return randi_range(enemy_power_formule(level)*0.6,enemy_power_formule(level)*1.2)
+func get_power_for_enemy(level : int) -> int : return randi_range(enemy_power_formule(level)*0.3,enemy_power_formule(level)*1.2)
 
 func _ready() -> void:
 	while true :
-		await get_tree().create_timer(randf_range(5, 10)/(1+quota_system.levels_pass)).timeout
+		await get_tree().create_timer(randf_range(5, 10)/(1+quota_system.levels_pass/5)).timeout
 		#await get_tree().create_timer(1).timeout debug
 		spawn()
 		
 func spawn()->void:
+	if(quota_system.levels_pass <= 3 ) : return
 	var new_hero : UnitNode = enemy_prefab.instantiate() as UnitNode
 	get_tree().current_scene.add_child(new_hero)
 	new_hero._power = max (get_power_for_enemy(quota_system.levels_pass), 1)

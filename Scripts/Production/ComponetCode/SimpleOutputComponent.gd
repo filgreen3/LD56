@@ -8,13 +8,14 @@ var stored_point : Vector2
 		
 func _put_unit(unitNode : UnitNode) -> void:
 	var targetObj : ProductionNode
-	
 	if point_cast_2 == null || randf() > 0.5:
-		if point_cast.is_colliding && point_cast.get_collider(0) != null:
+		var t : int = point_cast.collision_result.size()
+		if t > 0 && (point_cast.get_collider(0) as Node) != null:
 			targetObj = (point_cast.get_collider(0) as Node).get_parent() as ProductionNode
 		stored_point = point_cast.global_position
 	else :
-		if point_cast_2.is_colliding && point_cast_2.get_collider(0) != null:
+		var t : int = point_cast_2.collision_result.size()
+		if t > 0 && (point_cast_2.get_collider(0) as Node) != null:
 			targetObj = (point_cast_2.get_collider(0) as Node).get_parent() as ProductionNode
 		stored_point = point_cast_2.global_position	
 	
