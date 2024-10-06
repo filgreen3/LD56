@@ -7,6 +7,6 @@
 _team = 1
 _move_dir = Vector2(-1, 0)
 
-[node name="Tile0260" parent="." index="0"]
+[node name="Tile0260" parent="." index="1"]
 modulate = Color(0.796078, 0.121569, 0.207843, 1)
 texture = ExtResource("2_tryun")

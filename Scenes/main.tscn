@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c60458q6q61od"]
+[gd_scene load_steps=14 format=3 uid="uid://c60458q6q61od"]
 
 [ext_resource type="Script" path="res://Scripts/Grid/GridSystem.gd" id="1_g2efd"]
 [ext_resource type="Texture2D" uid="uid://du31kcd836ggc" path="res://Sprites/Other/Patterns by Kenney/pattern_15.png" id="1_le6x0"]
@@ -6,19 +6,11 @@
 [ext_resource type="Script" path="res://Scripts/Utility/DragAndDropSystem.gd" id="3_3g3xa"]
 [ext_resource type="PackedScene" uid="uid://c3xe3l7n66kab" path="res://Prefab/Producers/up_level.tscn" id="3_q8cek"]
 [ext_resource type="Script" path="res://Scripts/Units/UnitProcessingSystem.gd" id="4_ne74q"]
-[ext_resource type="Script" path="res://Scripts/Production/ProductionNode.gd" id="5_5l6jy"]
 [ext_resource type="Script" path="res://Scripts/Progress/ProductionStorageSystemProductionStorageSystem.gd" id="5_c43bn"]
-[ext_resource type="Texture2D" uid="uid://c1v0mbmljn0ie" path="res://Sprites/Production/production_01.png" id="6_obe0y"]
 [ext_resource type="Script" path="res://Scripts/Progress/InitialProductions.gd" id="6_tcptn"]
 [ext_resource type="PackedScene" uid="uid://cqsncp7tfsh4w" path="res://Prefab/Units/enemy_01.tscn" id="6_y2kdx"]
-[ext_resource type="Texture2D" uid="uid://dwqeirqn227aq" path="res://Sprites/Other/Kenney 1-Bit Art/Tiles/Transparent/tile_0012.png" id="7_jak1a"]
-[ext_resource type="Texture2D" uid="uid://c6oqhbvuijtni" path="res://Sprites/Other/Kenney 1-Bit Art/Tiles/Transparent/tile_0228.png" id="8_gosfj"]
-[ext_resource type="PackedScene" uid="uid://c8vm0pksqbckb" path="res://Prefab/Other/progress_bar_2d.tscn" id="9_4kl5v"]
-[ext_resource type="Script" path="res://Scripts/Production/ComponetCode/ProductorShaker.gd" id="10_wb8co"]
-[ext_resource type="Script" path="res://Scripts/Production/ComponetCode/SpawnerComponent.gd" id="11_p05wp"]
-[ext_resource type="Script" path="res://Scripts/Production/ComponetCode/SimpleOutputComponent.gd" id="13_mtjfb"]
-[ext_resource type="Script" path="res://Scripts/Production/ComponetCode/ProductionProgressBar.gd" id="14_qscm4"]
-[ext_resource type="Script" path="res://Scripts/Production/ComponetCode/DragableComponent.gd" id="15_7o11o"]
+[ext_resource type="Script" path="res://Scripts/Utility/ArrowShowerSystem.gd" id="9_i5c8f"]
+[ext_resource type="FontFile" uid="uid://bdhrg06aq51fd" path="res://FancyDialog/Not Jam UI Condensed 16.ttf" id="11_w7i31"]
 
 [sub_resource type="Gradient" id="Gradient_ugcva"]
 offsets = PackedFloat32Array(0.00309598, 1)
@@ -28,11 +20,6 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_ugcva")
 width = 16
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5x7vm"]
-size = Vector2(32, 32)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_w06t6"]
-
 [node name="Main" type="Node"]
 
 [node name="World" type="Node" parent="."]
@@ -40,7 +27,7 @@ size = Vector2(32, 32)
 [node name="Pattern15" type="Sprite2D" parent="World"]
 modulate = Color(1, 1, 1, 0.0470588)
 texture_repeat = 2
-position = Vector2(0, 192)
+position = Vector2(144, 336)
 texture = ExtResource("1_le6x0")
 region_enabled = true
 region_rect = Rect2(0, 0, 1280, 640)
@@ -48,7 +35,7 @@ region_rect = Rect2(0, 0, 1280, 640)
 [node name="Pattern17" type="Sprite2D" parent="World"]
 modulate = Color(1, 1, 1, 0.529412)
 texture_repeat = 2
-position = Vector2(0, 98)
+position = Vector2(144, 242)
 texture = SubResource("GradientTexture1D_f6hxe")
 region_enabled = true
 region_rect = Rect2(0, -16, 3200, 4)
@@ -56,7 +43,7 @@ region_rect = Rect2(0, -16, 3200, 4)
 [node name="Pattern18" type="Sprite2D" parent="World"]
 modulate = Color(1, 1, 1, 0.247059)
 texture_repeat = 2
-position = Vector2(0, -126)
+position = Vector2(144, 18)
 texture = SubResource("GradientTexture1D_f6hxe")
 region_enabled = true
 region_rect = Rect2(0, -16, 3200, 4)
@@ -64,7 +51,7 @@ region_rect = Rect2(0, -16, 3200, 4)
 [node name="Pattern16" type="Sprite2D" parent="World"]
 modulate = Color(0, 0, 0, 0.458824)
 texture_repeat = 2
-position = Vector2(0, 416)
+position = Vector2(144, 560)
 texture = ExtResource("1_le6x0")
 region_enabled = true
 region_rect = Rect2(0, 0, 1280, 640)
@@ -77,7 +64,7 @@ script = ExtResource("1_g2efd")
 [node name="DragAndDropSystem" type="Node" parent="Systems" node_paths=PackedStringArray("storage_system")]
 script = ExtResource("3_3g3xa")
 storage_system = NodePath("../ProductionStorageSystem")
-y_hights_point = 80
+y_hights_point = 230
 
 [node name="UnitProcessingSystem" type="Node" parent="Systems"]
 script = ExtResource("4_ne74q")
@@ -86,7 +73,7 @@ time = 0.4
 
 [node name="ProductionStorageSystem" type="Node" parent="Systems"]
 script = ExtResource("5_c43bn")
-center_position = Vector2(0, 120)
+center_position = Vector2(240, 270)
 spacing = 16.0
 speed = 10.0
 
@@ -95,195 +82,43 @@ script = ExtResource("6_tcptn")
 fabrics_prefabs = Array[PackedScene]([ExtResource("2_fv2y0"), ExtResource("3_q8cek"), ExtResource("3_q8cek"), ExtResource("3_q8cek")])
 fabric_storage = NodePath("../ProductionStorageSystem")
 
+[node name="ArrowShowerSystem" type="Node" parent="Systems" node_paths=PackedStringArray("dragSystem")]
+script = ExtResource("9_i5c8f")
+dragSystem = NodePath("../DragAndDropSystem")
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(240, 150)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="Spawner" parent="." instance=ExtResource("2_fv2y0")]
-position = Vector2(-176, 0)
+position = Vector2(40, 160)
 
-[node name="Spawner2" type="Node2D" parent="."]
-position = Vector2(256, 0)
-script = ExtResource("5_5l6jy")
-_production_name = "Spawner"
-_production_desciptison = "Make some units"
+[node name="Spawner2" parent="." instance=ExtResource("2_fv2y0")]
+position = Vector2(440, 160)
 
-[node name="Graphic" type="Node2D" parent="Spawner2"]
-position = Vector2(0, 16)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Spawner2/Graphic"]
-position = Vector2(0, -16)
-texture = ExtResource("6_obe0y")
-
-[node name="Sprite2D" type="Sprite2D" parent="Spawner2/Graphic"]
+[node name="Sprite2D" parent="Spawner2/Graphic" index="1"]
 position = Vector2(8, -16)
-texture = ExtResource("7_jak1a")
 
-[node name="Sprite2D3" type="Sprite2D" parent="Spawner2/Graphic"]
+[node name="Sprite2D3" parent="Spawner2/Graphic" index="2"]
 position = Vector2(-8, -16)
-texture = ExtResource("8_gosfj")
 
-[node name="ProgressBar2D" parent="Spawner2/Graphic" instance=ExtResource("9_4kl5v")]
-position = Vector2(0, -2)
-
-[node name="Body2D" type="StaticBody2D" parent="Spawner2"]
-input_pickable = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner2/Body2D"]
-shape = SubResource("RectangleShape2D_5x7vm")
-
-[node name="ProductorShaker" type="Node" parent="Spawner2" node_paths=PackedStringArray("node_to_shake")]
-script = ExtResource("10_wb8co")
-node_to_shake = NodePath("../Graphic")
-max_scale = Vector2(1.1, 0.9)
-release_time = 0.7
-
-[node name="SpawnerComponent" type="Node" parent="Spawner2"]
-script = ExtResource("11_p05wp")
-time_to_spawn_setting = 1.0
+[node name="SpawnerComponent" parent="Spawner2" index="4"]
 spawn_prefab = ExtResource("6_y2kdx")
-count = 9999
 
-[node name="SimpleOutputComponent" type="Node" parent="Spawner2" node_paths=PackedStringArray("point_cast")]
-script = ExtResource("13_mtjfb")
-point_cast = NodePath("../Output")
-
-[node name="ProductionProgressBar" type="Node" parent="Spawner2" node_paths=PackedStringArray("progress_bar")]
-script = ExtResource("14_qscm4")
-start_progress_from_start = true
-progress_bar = NodePath("../Graphic/ProgressBar2D")
-time_def = 1.0
-
-[node name="DragableComponent" type="Node" parent="Spawner2" node_paths=PackedStringArray("body")]
-script = ExtResource("15_7o11o")
-body = NodePath("../Body2D")
-
-[node name="Output" type="ShapeCast2D" parent="Spawner2"]
+[node name="Output" parent="Spawner2" index="8"]
 position = Vector2(-24, 8)
-shape = SubResource("CircleShape2D_w06t6")
-target_position = Vector2(0, 0)
 
-[node name="Spawner3" type="Node2D" parent="."]
-position = Vector2(256, -112)
-script = ExtResource("5_5l6jy")
-_production_name = "Spawner"
-_production_desciptison = "Make some units"
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 480.0
+offset_bottom = 16.0
 
-[node name="Graphic" type="Node2D" parent="Spawner3"]
-position = Vector2(0, 16)
+[node name="Label" type="Label" parent="PanelContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_w7i31")
+text = "Wave 1 / 100"
+horizontal_alignment = 1
 
-[node name="Sprite2D2" type="Sprite2D" parent="Spawner3/Graphic"]
-position = Vector2(0, -16)
-texture = ExtResource("6_obe0y")
-
-[node name="Sprite2D" type="Sprite2D" parent="Spawner3/Graphic"]
-position = Vector2(8, -16)
-texture = ExtResource("7_jak1a")
-
-[node name="Sprite2D3" type="Sprite2D" parent="Spawner3/Graphic"]
-position = Vector2(-8, -16)
-texture = ExtResource("8_gosfj")
-
-[node name="ProgressBar2D" parent="Spawner3/Graphic" instance=ExtResource("9_4kl5v")]
-position = Vector2(0, -2)
-
-[node name="Body2D" type="StaticBody2D" parent="Spawner3"]
-input_pickable = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner3/Body2D"]
-shape = SubResource("RectangleShape2D_5x7vm")
-
-[node name="ProductorShaker" type="Node" parent="Spawner3" node_paths=PackedStringArray("node_to_shake")]
-script = ExtResource("10_wb8co")
-node_to_shake = NodePath("../Graphic")
-max_scale = Vector2(1.1, 0.9)
-release_time = 0.7
-
-[node name="SpawnerComponent" type="Node" parent="Spawner3"]
-script = ExtResource("11_p05wp")
-time_to_spawn_setting = 1.0
-spawn_prefab = ExtResource("6_y2kdx")
-count = 9999
-
-[node name="SimpleOutputComponent" type="Node" parent="Spawner3" node_paths=PackedStringArray("point_cast")]
-script = ExtResource("13_mtjfb")
-point_cast = NodePath("../Output")
-
-[node name="ProductionProgressBar" type="Node" parent="Spawner3" node_paths=PackedStringArray("progress_bar")]
-script = ExtResource("14_qscm4")
-start_progress_from_start = true
-progress_bar = NodePath("../Graphic/ProgressBar2D")
-time_def = 1.0
-
-[node name="DragableComponent" type="Node" parent="Spawner3" node_paths=PackedStringArray("body")]
-script = ExtResource("15_7o11o")
-body = NodePath("../Body2D")
-
-[node name="Output" type="ShapeCast2D" parent="Spawner3"]
-position = Vector2(-24, 8)
-shape = SubResource("CircleShape2D_w06t6")
-target_position = Vector2(0, 0)
-
-[node name="Spawner4" type="Node2D" parent="."]
-position = Vector2(256, 80)
-script = ExtResource("5_5l6jy")
-_production_name = "Spawner"
-_production_desciptison = "Make some units"
-
-[node name="Graphic" type="Node2D" parent="Spawner4"]
-position = Vector2(0, 16)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Spawner4/Graphic"]
-position = Vector2(0, -16)
-texture = ExtResource("6_obe0y")
-
-[node name="Sprite2D" type="Sprite2D" parent="Spawner4/Graphic"]
-position = Vector2(8, -16)
-texture = ExtResource("7_jak1a")
-
-[node name="Sprite2D3" type="Sprite2D" parent="Spawner4/Graphic"]
-position = Vector2(-8, -16)
-texture = ExtResource("8_gosfj")
-
-[node name="ProgressBar2D" parent="Spawner4/Graphic" instance=ExtResource("9_4kl5v")]
-position = Vector2(0, -2)
-
-[node name="Body2D" type="StaticBody2D" parent="Spawner4"]
-input_pickable = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner4/Body2D"]
-shape = SubResource("RectangleShape2D_5x7vm")
-
-[node name="ProductorShaker" type="Node" parent="Spawner4" node_paths=PackedStringArray("node_to_shake")]
-script = ExtResource("10_wb8co")
-node_to_shake = NodePath("../Graphic")
-max_scale = Vector2(1.1, 0.9)
-release_time = 0.7
-
-[node name="SpawnerComponent" type="Node" parent="Spawner4"]
-script = ExtResource("11_p05wp")
-time_to_spawn_setting = 1.0
-spawn_prefab = ExtResource("6_y2kdx")
-count = 9999
-
-[node name="SimpleOutputComponent" type="Node" parent="Spawner4" node_paths=PackedStringArray("point_cast")]
-script = ExtResource("13_mtjfb")
-point_cast = NodePath("../Output")
-
-[node name="ProductionProgressBar" type="Node" parent="Spawner4" node_paths=PackedStringArray("progress_bar")]
-script = ExtResource("14_qscm4")
-start_progress_from_start = true
-progress_bar = NodePath("../Graphic/ProgressBar2D")
-time_def = 1.0
-
-[node name="DragableComponent" type="Node" parent="Spawner4" node_paths=PackedStringArray("body")]
-script = ExtResource("15_7o11o")
-body = NodePath("../Body2D")
-
-[node name="Output" type="ShapeCast2D" parent="Spawner4"]
-position = Vector2(-24, 8)
-shape = SubResource("CircleShape2D_w06t6")
-target_position = Vector2(0, 0)
+[editable path="Spawner2"]

@@ -1,6 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://c3xe3l7n66kab"]
+[gd_scene load_steps=13 format=3 uid="uid://c3xe3l7n66kab"]
 
 [ext_resource type="Script" path="res://Scripts/Production/ProductionNode.gd" id="1_qmb8i"]
+[ext_resource type="Texture2D" uid="uid://dqfvfgv1jrker" path="res://Sprites/Production/arrow.png" id="2_0iovl"]
+[ext_resource type="Script" path="res://Scripts/Utility/ArrowInProduction.gd" id="2_bnaww"]
 [ext_resource type="Texture2D" uid="uid://c1v0mbmljn0ie" path="res://Sprites/Production/production_01.png" id="2_rxkj5"]
 [ext_resource type="PackedScene" uid="uid://c8vm0pksqbckb" path="res://Prefab/Other/progress_bar_2d.tscn" id="3_pwe8b"]
 [ext_resource type="Texture2D" uid="uid://dd5llga1r41ak" path="res://Sprites/Other/Kenney 1-Bit Art/Tiles/Transparent/tile_0028.png" id="4_p2imv"]
@@ -10,7 +12,7 @@
 [ext_resource type="Script" path="res://Scripts/Production/ComponetCode/SimpleOutputComponent.gd" id="9_cow7k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y8px8"]
-size = Vector2(32, 32)
+size = Vector2(24, 24)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bj3nm"]
 
@@ -20,11 +22,17 @@ script = ExtResource("1_qmb8i")
 _production_name = "Spawner"
 _production_desciptison = "Make some units"
 
-[node name="Body2D" type="StaticBody2D" parent="."]
-input_pickable = true
+[node name="Arrows" type="Node2D" parent="." node_paths=PackedStringArray("_production")]
+script = ExtResource("2_bnaww")
+_production = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body2D"]
-shape = SubResource("RectangleShape2D_y8px8")
+[node name="Arrow2" type="Sprite2D" parent="Arrows"]
+position = Vector2(23, 0)
+texture = ExtResource("2_0iovl")
+
+[node name="Arrow" type="Sprite2D" parent="Arrows"]
+position = Vector2(-23, 0)
+texture = ExtResource("2_0iovl")
 
 [node name="Graphic" type="Node2D" parent="."]
 position = Vector2(0, 16)
@@ -39,6 +47,13 @@ texture = ExtResource("4_p2imv")
 
 [node name="ProgressBar2D" parent="Graphic" instance=ExtResource("3_pwe8b")]
 position = Vector2(0, -3)
+
+[node name="Body2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body2D"]
+shape = SubResource("RectangleShape2D_y8px8")
 
 [node name="ProductorShaker" type="Node" parent="." node_paths=PackedStringArray("node_to_shake")]
 script = ExtResource("8_co2jt")
@@ -55,13 +70,15 @@ script = ExtResource("6_c01j6")
 progress_bar = NodePath("../Graphic/ProgressBar2D")
 time_def = 1.0
 
-[node name="DragableComponent" type="Node" parent="." node_paths=PackedStringArray("body")]
+[node name="DragableComponent" type="Node" parent="." node_paths=PackedStringArray("area")]
 script = ExtResource("8_pig8v")
-body = NodePath("../Body2D")
+area = NodePath("../Body2D")
 
 [node name="Output" type="ShapeCast2D" parent="."]
 position = Vector2(24, 8)
 shape = SubResource("CircleShape2D_bj3nm")
 target_position = Vector2(0, 0)
+collision_mask = 2
+collide_with_areas = true
 
 [connection signal="input_event" from="Body2D" to="DragableComponent" method="_body_input_event"]

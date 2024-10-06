@@ -1,8 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://dv38wxw6upeag"]
+[gd_scene load_steps=11 format=3 uid="uid://dv38wxw6upeag"]
 
 [ext_resource type="Script" path="res://Scripts/Units/UnitNode.gd" id="1_e6xkc"]
 [ext_resource type="Texture2D" uid="uid://d0ub55aoqgbld" path="res://Sprites/Other/Kenney 1-Bit Art/Tiles/Transparent/tile_0281.png" id="2_nwad7"]
 [ext_resource type="Script" path="res://Scripts/Units/UnitRotator.gd" id="3_k5kbx"]
+[ext_resource type="FontFile" uid="uid://bdhrg06aq51fd" path="res://FancyDialog/Not Jam UI Condensed 16.ttf" id="4_2flok"]
+[ext_resource type="Script" path="res://Scripts/Utility/LinkLableToNode.gd" id="5_lc0og"]
+
+[sub_resource type="Gradient" id="Gradient_ihpsn"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.377709, 0.721362)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ketrw"]
+gradient = SubResource("Gradient_ihpsn")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gtso2"]
 size = Vector2(16, 16)
@@ -17,8 +31,15 @@ size = Vector2(16, 16)
 motion_mode = 1
 script = ExtResource("1_e6xkc")
 _shape = NodePath("ShapeCast2D")
-y_lowest_point = -128.0
-y_heights_point = 96.0
+y_lowest_point = 22.0
+y_heights_point = 246.0
+
+[node name="Tile0261" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.247059)
+texture_filter = 2
+position = Vector2(0, 8)
+scale = Vector2(1, -0.36)
+texture = SubResource("GradientTexture2D_ketrw")
 
 [node name="Tile0260" type="Sprite2D" parent="."]
 texture = ExtResource("2_nwad7")
@@ -32,6 +53,7 @@ position = Vector2(16, 0)
 shape = SubResource("CircleShape2D_lma2c")
 target_position = Vector2(0, 0)
 max_results = 1
+collision_mask = 3
 collide_with_areas = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -46,3 +68,17 @@ max_scale = Vector2(0.9, 1.1)
 release_time = 0.7
 max_angle = 0.167
 rotate_time = 2.0
+
+[node name="Label" type="Label" parent="."]
+z_index = 10
+y_sort_enabled = true
+offset_left = -8.0
+offset_top = -11.0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("4_2flok")
+theme_override_font_sizes/font_size = 8
+text = "10"
+horizontal_alignment = 1
+script = ExtResource("5_lc0og")
