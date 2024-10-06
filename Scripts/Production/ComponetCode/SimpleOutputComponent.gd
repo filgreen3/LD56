@@ -5,7 +5,7 @@ class_name SimpleOutputComponent extends OutPutComponent
 @export var point_cast_2 : ShapeCast2D
 var stored_point : Vector2 
 
-		
+signal on_releas
 func _put_unit(unitNode : UnitNode) -> void:
 	var targetObj : ProductionNode
 	if point_cast_2 == null || randf() > 0.5:
@@ -22,6 +22,7 @@ func _put_unit(unitNode : UnitNode) -> void:
 	if targetObj != null && targetObj != _productor:
 		targetObj._put_unit(unitNode)
 	else :
+		on_releas.emit()
 		unitNode.global_position = stored_point
 		unitNode.process_mode = Node.PROCESS_MODE_INHERIT
 		unitNode.visible = true

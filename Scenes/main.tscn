@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c60458q6q61od"]
+[gd_scene load_steps=31 format=3 uid="uid://c60458q6q61od"]
 
 [ext_resource type="Script" path="res://Scripts/Grid/GridSystem.gd" id="1_g2efd"]
 [ext_resource type="Texture2D" uid="uid://du31kcd836ggc" path="res://Sprites/Other/Patterns by Kenney/pattern_15.png" id="1_le6x0"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Scripts/Progress/ScoreGettingSystem.gd" id="11_kknk6"]
 [ext_resource type="FontFile" uid="uid://bdhrg06aq51fd" path="res://FancyDialog/Not Jam UI Condensed 16.ttf" id="11_w7i31"]
 [ext_resource type="Script" path="res://Scripts/Progress/QuotaSystem.gd" id="12_acy2s"]
+[ext_resource type="AudioStream" uid="uid://bd8afe8ir4ajl" path="res://Assets/quota_pass.wav" id="13_hrlr8"]
 [ext_resource type="Script" path="res://Scripts/Progress/RewardFromQuotaSystem.gd" id="13_ya41l"]
 [ext_resource type="Script" path="res://Scripts/Progress/TimeSystem.gd" id="14_xs5pf"]
 [ext_resource type="PackedScene" uid="uid://3n0tw1igmbp3" path="res://Prefab/Producers/power_mul_down.tscn" id="16_nktsf"]
@@ -23,6 +24,8 @@
 [ext_resource type="Script" path="res://Scripts/Progress/EnemyGeneratorSystem.gd" id="17_ivjbn"]
 [ext_resource type="PackedScene" uid="uid://3y6y1esq8jkh" path="res://Prefab/Producers/t_shape.tscn" id="17_vl0yn"]
 [ext_resource type="Script" path="res://Scripts/Progress/restart_system.gd" id="21_ocjft"]
+[ext_resource type="AudioStream" uid="uid://v2b13tk0qhi3" path="res://Assets/loose_sound.wav" id="21_v5uwn"]
+[ext_resource type="AudioStream" uid="uid://trgh0s2mb54d" path="res://Assets/music_2.wav" id="25_l83xg"]
 
 [sub_resource type="Gradient" id="Gradient_ugcva"]
 offsets = PackedFloat32Array(0.00309598, 1)
@@ -148,6 +151,11 @@ scale_shock = Vector2(1.2, 1.2)
 quota_lable_scale_parent = NodePath("../../PanelContainer/QuotaParent/SacleQuota")
 red_color = Color(0.796078, 0.121569, 0.207843, 1)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Systems/QuotaSystem"]
+stream = ExtResource("13_hrlr8")
+volume_db = -20.8
+pitch_scale = 0.73
+
 [node name="RewardFromQuotaSystem" type="Node" parent="Systems" node_paths=PackedStringArray("quota_system", "storage_system")]
 script = ExtResource("13_ya41l")
 factory_array = Array[PackedScene]([ExtResource("7_odafh"), ExtResource("2_fv2y0"), ExtResource("8_wxjsg"), ExtResource("7_2geyp"), ExtResource("17_g0am0"), ExtResource("17_vl0yn"), ExtResource("7_odafh"), ExtResource("7_odafh"), ExtResource("16_nktsf"), ExtResource("7_odafh")])
@@ -162,6 +170,10 @@ scale_time_parent = NodePath("../../PanelContainer/TimeParent/Scale")
 scale_shock = Vector2(1.2, 1.2)
 quota_system = NodePath("../QuotaSystem")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Systems/TimeSystem"]
+stream = ExtResource("21_v5uwn")
+volume_db = -26.441
+
 [node name="EnemyGeneratorSystem" type="Node" parent="Systems" node_paths=PackedStringArray("time_system", "quota_system", "move_system")]
 script = ExtResource("17_ivjbn")
 enemy_prefab = ExtResource("6_y2kdx")
@@ -173,6 +185,11 @@ move_system = NodePath("../MoveLimitSystem")
 [node name="RestartSystem" type="Node" parent="Systems" node_paths=PackedStringArray("time_system")]
 script = ExtResource("21_ocjft")
 time_system = NodePath("../TimeSystem")
+
+[node name="Music" type="AudioStreamPlayer" parent="Systems"]
+stream = ExtResource("25_l83xg")
+volume_db = -5.426
+autoplay = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(176, 112)
@@ -262,3 +279,6 @@ horizontal_alignment = 1
 
 [node name="Spawner" parent="." instance=ExtResource("2_fv2y0")]
 position = Vector2(231, 104)
+
+[connection signal="quota_pass" from="Systems/QuotaSystem" to="Systems/QuotaSystem/AudioStreamPlayer" method="play" unbinds=1]
+[connection signal="on_time_pass" from="Systems/TimeSystem" to="Systems/TimeSystem/AudioStreamPlayer" method="play"]
