@@ -20,7 +20,7 @@ time_to_spawn_setting = 2.0
 spawn_prefab = ExtResource("9_vya1x")
 count = 99999
 
-[node name="Label" parent="." index="8"]
+[node name="Label" parent="." index="9"]
 offset_left = -7.0
 offset_right = 9.0
 text = "NEW"

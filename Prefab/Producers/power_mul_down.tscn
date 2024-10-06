@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://3n0tw1igmbp3"]
+
+[ext_resource type="PackedScene" uid="uid://c3xe3l7n66kab" path="res://Prefab/Producers/fabric.tscn" id="1_vm75m"]
+[ext_resource type="Texture2D" uid="uid://cv6g4lign4rlb" path="res://Sprites/Production/map_upgrade4.png" id="2_gcf7r"]
+[ext_resource type="Script" path="res://Scripts/Production/ComponetCode/MulPowerComponent.gd" id="2_t27dv"]
+
+[node name="PowerAdd" instance=ExtResource("1_vm75m")]
+
+[node name="ArrowOut" parent="Graphic/Arrows" index="0"]
+position = Vector2(0, 16)
+rotation = 1.5708
+
+[node name="Production04" type="Sprite2D" parent="Graphic" index="2"]
+z_index = 12
+position = Vector2(0, -8)
+texture = ExtResource("2_gcf7r")
+
+[node name="MulPowerComponent" type="Node" parent="." index="5" node_paths=PackedStringArray("_label")]
+script = ExtResource("2_t27dv")
+_label = NodePath("../Label")
+_mul_value = 2
+
+[node name="Output" parent="." index="8"]
+position = Vector2(0, 16)
+
+[node name="Label" parent="." index="9"]
+text = "+4"

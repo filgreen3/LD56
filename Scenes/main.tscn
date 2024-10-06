@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c60458q6q61od"]
+[gd_scene load_steps=28 format=3 uid="uid://c60458q6q61od"]
 
 [ext_resource type="Script" path="res://Scripts/Grid/GridSystem.gd" id="1_g2efd"]
 [ext_resource type="Texture2D" uid="uid://du31kcd836ggc" path="res://Sprites/Other/Patterns by Kenney/pattern_15.png" id="1_le6x0"]
@@ -18,7 +18,8 @@
 [ext_resource type="Script" path="res://Scripts/Progress/QuotaSystem.gd" id="12_acy2s"]
 [ext_resource type="Script" path="res://Scripts/Progress/RewardFromQuotaSystem.gd" id="13_ya41l"]
 [ext_resource type="Script" path="res://Scripts/Progress/TimeSystem.gd" id="14_xs5pf"]
-[ext_resource type="PackedScene" uid="uid://3n0tw1igmbp3" path="res://Prefab/Producers/power_mul.tscn" id="16_nktsf"]
+[ext_resource type="PackedScene" uid="uid://3n0tw1igmbp3" path="res://Prefab/Producers/power_mul_down.tscn" id="16_nktsf"]
+[ext_resource type="PackedScene" uid="uid://cl0nrjf0k0ylq" path="res://Prefab/Producers/power_mul_up.tscn" id="17_g0am0"]
 [ext_resource type="Script" path="res://Scripts/Progress/EnemyGeneratorSystem.gd" id="17_ivjbn"]
 [ext_resource type="PackedScene" uid="uid://3y6y1esq8jkh" path="res://Prefab/Producers/t_shape.tscn" id="17_vl0yn"]
 [ext_resource type="Script" path="res://Scripts/Progress/restart_system.gd" id="21_ocjft"]
@@ -53,20 +54,20 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1280, 640)
 
 [node name="Pattern20" type="Sprite2D" parent="World"]
-modulate = Color(0.75, 0.75, 0.75, 0.129412)
+modulate = Color(0.75, 0.2475, 0.2475, 0.0705882)
 texture_repeat = 2
-position = Vector2(360, 128)
+position = Vector2(312, 104)
 texture = ExtResource("1_le6x0")
 region_enabled = true
-region_rect = Rect2(0, 0, 32, 224)
+region_rect = Rect2(0, 0, 80, 176)
 
 [node name="Pattern21" type="Sprite2D" parent="World"]
-modulate = Color(0.75, 0.75, 0.75, 0.129412)
+modulate = Color(0.75, 0.2475, 0.2475, 0.0705882)
 texture_repeat = 2
-position = Vector2(360, 128)
+position = Vector2(312, 104)
 texture = ExtResource("1_le6x0")
 region_enabled = true
-region_rect = Rect2(0, 16, 32, 224)
+region_rect = Rect2(0, 16, 80, 176)
 
 [node name="LineUp" type="Sprite2D" parent="World"]
 modulate = Color(0.65, 0.65, 0.65, 1)
@@ -149,7 +150,7 @@ red_color = Color(0.796078, 0.121569, 0.207843, 1)
 
 [node name="RewardFromQuotaSystem" type="Node" parent="Systems" node_paths=PackedStringArray("quota_system", "storage_system")]
 script = ExtResource("13_ya41l")
-factory_array = Array[PackedScene]([ExtResource("7_odafh"), ExtResource("2_fv2y0"), ExtResource("8_wxjsg"), ExtResource("7_2geyp"), ExtResource("16_nktsf"), ExtResource("17_vl0yn"), ExtResource("7_odafh"), ExtResource("7_odafh"), ExtResource("16_nktsf")])
+factory_array = Array[PackedScene]([ExtResource("7_odafh"), ExtResource("2_fv2y0"), ExtResource("8_wxjsg"), ExtResource("7_2geyp"), ExtResource("17_g0am0"), ExtResource("17_vl0yn"), ExtResource("7_odafh"), ExtResource("7_odafh"), ExtResource("16_nktsf"), ExtResource("7_odafh")])
 quota_system = NodePath("../QuotaSystem")
 storage_system = NodePath("../ProductionStorageSystem")
 
