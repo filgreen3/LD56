@@ -11,10 +11,12 @@ func add_factory(factory : ProductionNode) -> void:
 	if productors.has(factory) : return
 	factory.enable = false
 	productors.append(factory)
+	factory.create_tween().tween_property(factory,"scale",Vector2.ONE*1.3,0.3)
 	productors.sort_custom(func(a : ProductionNode, b : ProductionNode)->bool: return a.global_position.x < b.global_position.x)
 
 func remove_factory(factory : ProductionNode) -> void:
 	if !productors.has(factory) : return
+	factory.create_tween().tween_property(factory,"scale",Vector2.ONE,0.3)
 	factory.enable = true
 	productors.erase(factory)
 	

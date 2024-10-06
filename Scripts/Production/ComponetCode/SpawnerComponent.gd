@@ -19,13 +19,14 @@ func _init_production(productor : ProductionNode) -> void:
 func _spawning_process() -> void:
 	while true:
 		await get_tree().create_timer(time_to_spawn()).timeout
-		if count > 0 && _productor.enable:
+		if count > 0 && _productor.enable && MoveLimitSystem.instance.is_in_limit(_productor._get_output().get_point()) :
 			_spawn()
 			count -= 1
 		
 func _spawn() -> void:
 	var new_hero : UnitNode = spawn_prefab.instantiate() as UnitNode
 	get_tree().current_scene.add_child(new_hero)
+	new_hero._power = 1
 	if _productor._get_output() != null :
 		_productor._get_output()._put_unit(new_hero)
 	_productor.on_unit_put.emit(new_hero)

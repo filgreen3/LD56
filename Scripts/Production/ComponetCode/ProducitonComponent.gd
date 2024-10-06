@@ -5,7 +5,9 @@ var _productor : ProductionNode
 
 func _init_production(productor : ProductionNode) -> void:
 	_productor = productor
-	pass
 
 func _put_unit(unitNode : UnitNode) -> void:
+	pass
+
+func _put_on_map() -> void:
 	pass

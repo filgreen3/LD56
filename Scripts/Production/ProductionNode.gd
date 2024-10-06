@@ -31,7 +31,11 @@ func _put_unit(unitNode : UnitNode) -> void:
 	await get_tree().create_timer(_time_to_produce).timeout
 	for comp : ProducitonComponent in _comps:
 		comp._put_unit(unitNode)
-	
+		
+func _put_on_map() -> void:
+	for comp : ProducitonComponent in _comps:
+		comp._put_on_map()
+		
 func _get_output() -> OutPutComponent :
 	for comp : ProducitonComponent in _comps:
 		if comp is OutPutComponent:

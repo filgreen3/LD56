@@ -3,19 +3,25 @@ class_name UnitNode extends CharacterBody2D
 const STANDART_OFFSET : float = 16
 
 @export_category("Stats")
-@export var _level : int = 1
-@export var _basic_power : int = 1
-@export var _basic_hp : int = 5
+@export var _power : int = 1 :
+	set (value):
+		if value < 0:
+			value = 0
+		_power = value
+		_power_display.text = str(value)
+	
 @export var _basic_speed : int = 1
 
 @export_category("Setting")
+@export var _power_display : Label
 @export var _items : Array[Item]
 @export var _shape : ShapeCast2D 
+@export var _self_shape_cast : ShapeCast2D 
 @export var _team : int
 @export var _move_dir : Vector2 = Vector2(1,0)
 
-@export var y_lowest_point : float = -16*2
-@export var y_heights_point : float = 16*2
+func y_lowest_point() -> float: return MoveLimitSystem.instance.y_low_limit
+func y_heights_point() -> float: return MoveLimitSystem.instance.y_high_limit
 
 signal on_target_reached
 
@@ -36,12 +42,23 @@ func _process(delta: float) -> void:
 	_dir = _target_pos - global_position
 	move_and_collide(_dir*delta*_basic_speed * STANDART_OFFSET)
 	if _dir.length_squared() < 0.1 :
-		if(_next_enemy!=null):
-			_next_enemy.queue_free()
-			queue_free()
+		battle_handler()
 		_is_target_reached = true
+		if global_position.x > ScoreGettingSystem.instance.x_limit_to_score:
+			QuotaSystem.instance.update_quota(_power)
+			queue_free()
 		on_target_reached.emit()
-		
+
+func battle_handler() -> void:
+	if(_next_enemy!=null):
+			var enemy_power : int = _next_enemy._power
+			_next_enemy._power -= _power
+			if _next_enemy._power <= 0:
+				_next_enemy.queue_free()
+			_power -= enemy_power
+			if _power <= 0:
+				queue_free()
+
 
 func add_item(item : Item) -> void:
 	_items.append(item)
@@ -49,9 +66,10 @@ func add_item(item : Item) -> void:
 	item.given_to_unit(self)
 
 func move_when_in_town() -> void : 
+	if !_self_shape_cast.is_colliding():
 		await get_tree().create_timer(0.5).timeout
-		await check_for_empty_space()
-		_is_target_reached = false
+	await check_for_empty_space()
+	_is_target_reached = false
 
 
 func get_new_target_pos()->void:
@@ -62,7 +80,7 @@ func get_new_target_pos()->void:
 		rand_vector = Vector2.UP * signf(randf()-0.5)
 	rand_vector *= STANDART_OFFSET
 
-	if (global_position + rand_vector).y < y_lowest_point || (global_position + rand_vector).y > y_heights_point:
+	if (global_position + rand_vector).y < y_lowest_point() || (global_position + rand_vector).y > y_heights_point():
 		rand_vector.y = -rand_vector.y
 
 	_shape.position = rand_vector 
@@ -77,10 +95,14 @@ func check_for_empty_space() -> void:
 		return
 	while _shape.is_colliding():
 		get_new_target_pos()
-		await get_tree().create_timer(0.5).timeout
+		if !_self_shape_cast.is_colliding():
+			await get_tree().create_timer(0.5).timeout
+		else:
+			await get_tree().process_frame 
+			
 
 func check_if_next_is_enemy() -> bool:
-	if _shape.is_colliding() && (_shape.get_collider(0) as Node).get_parent() is UnitNode:
+	if _shape.is_colliding() && _shape.get_collider(0) is Node && (_shape.get_collider(0) as Node).get_parent() is UnitNode:
 		var enemy : UnitNode = (_shape.get_collider(0) as Node).get_parent() as UnitNode
 		if enemy._team != _team :
 			_next_enemy = enemy

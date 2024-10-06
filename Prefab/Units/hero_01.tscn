@@ -27,12 +27,12 @@ radius = 5.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bohqr"]
 size = Vector2(16, 16)
 
-[node name="Hero" type="CharacterBody2D" node_paths=PackedStringArray("_shape")]
+[node name="Hero" type="CharacterBody2D" node_paths=PackedStringArray("_power_display", "_shape", "_self_shape_cast")]
 motion_mode = 1
 script = ExtResource("1_e6xkc")
+_power_display = NodePath("Label")
 _shape = NodePath("ShapeCast2D")
-y_lowest_point = 22.0
-y_heights_point = 246.0
+_self_shape_cast = NodePath("SelfCast")
 
 [node name="Tile0261" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.247059)
@@ -56,6 +56,13 @@ max_results = 1
 collision_mask = 3
 collide_with_areas = true
 
+[node name="SelfCast" type="ShapeCast2D" parent="."]
+shape = SubResource("CircleShape2D_lma2c")
+target_position = Vector2(0, 0)
+max_results = 1
+collision_mask = 3
+collide_with_areas = true
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -69,7 +76,7 @@ release_time = 0.7
 max_angle = 0.167
 rotate_time = 2.0
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." node_paths=PackedStringArray("parent")]
 z_index = 10
 y_sort_enabled = true
 offset_left = -8.0
@@ -82,3 +89,4 @@ theme_override_font_sizes/font_size = 8
 text = "10"
 horizontal_alignment = 1
 script = ExtResource("5_lc0og")
+parent = NodePath("..")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://36vq01afsgu2"]
+
+[ext_resource type="PackedScene" uid="uid://c3xe3l7n66kab" path="res://Prefab/Producers/fabric.tscn" id="1_gbegu"]
+[ext_resource type="Script" path="res://Scripts/Production/ComponetCode/MapUpgrade.gd" id="2_d0m21"]
+[ext_resource type="Texture2D" uid="uid://c8d10v6i4b1fk" path="res://Sprites/Production/map_upgrade2.png" id="2_wgjno"]
+
+[node name="MapUpgradeDown" instance=ExtResource("1_gbegu")]
+
+[node name="ArrowOut" parent="Graphic/Arrows" index="0"]
+visible = false
+
+[node name="ArrowIn" parent="Graphic/Arrows" index="1"]
+visible = false
+
+[node name="Production04" type="Sprite2D" parent="Graphic" index="2"]
+position = Vector2(0, -8)
+texture = ExtResource("2_wgjno")
+
+[node name="ProgressBar2D" parent="Graphic" index="3"]
+visible = false
+
+[node name="MapUpgrade" type="Node" parent="." index="5" node_paths=PackedStringArray("junk")]
+script = ExtResource("2_d0m21")
+dir_upgrade = "DOWN"
+junk = NodePath("../DragableComponent")
+
+[node name="Label" parent="." index="8"]
+visible = false

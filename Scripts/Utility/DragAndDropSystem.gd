@@ -21,15 +21,15 @@ func get_mouse_point()->Vector2 :
 	#pos.x -= 240
 	#pos.y -= 150
 
-	pos.x = roundi(pos.x / GridNode.CLAMP_SCALE ) * GridNode.CLAMP_SCALE
-	pos.y = roundi(pos.y / GridNode.CLAMP_SCALE ) * GridNode.CLAMP_SCALE
+	pos.x = roundi(pos.x / GridNode.CLAMP_SCALE ) * GridNode.CLAMP_SCALE - 8
+	pos.y = roundi(pos.y / GridNode.CLAMP_SCALE ) * GridNode.CLAMP_SCALE - 8
 	return pos
 
 func _input(event: InputEvent) -> void:
 	if current_dragable != null && \
 	event is InputEventMouseButton && \
 	!(event as InputEventMouseButton).is_pressed() :
-		drop()
+		drop()	
 	
 func _process(delta: float) -> void:
 	if current_dragable != null : 
@@ -40,7 +40,11 @@ func _move() -> void:
 	if (prev_pos - curr_pos).length_squared() > GridNode.CLAMP_SCALE * GridNode.CLAMP_SCALE:
 		pass
 		#current_dragable.shock_scale()
-	current_dragable._productor.modulate.a = 0.6 if current_dragable.is_overlapping() else 1		
+
+	prev_pos = curr_pos
+	
+	current_dragable._productor.modulate.a = 0.6 if is_bad_place() else 1
+	
 	current_dragable._move(curr_pos)
 	
 func take(dragable : DragableComponent ) -> void :
@@ -49,8 +53,11 @@ func take(dragable : DragableComponent ) -> void :
 	prev_pos = current_dragable._get_pos()
 	on_take.emit(current_dragable)
 
+func is_bad_place()->bool:
+	return !MoveLimitSystem.instance.is_in_limit(curr_pos, 0, 10) || current_dragable.is_overlapping()
+
 func drop() -> void :
-	if curr_pos.y > y_hights_point || current_dragable.is_overlapping():
+	if is_bad_place():
 		current_dragable._productor.modulate.a = 1
 		storage_system.add_factory(current_dragable._productor)
 	else :
@@ -58,8 +65,10 @@ func drop() -> void :
 		while (current_dragable._get_pos() - remain_pos).length_squared()>0.1:
 			await get_tree().process_frame
 			current_dragable._move(remain_pos)
-	on_drop.emit(current_dragable)
+		current_dragable._productor._put_on_map()
+		on_drop.emit(current_dragable)
 	current_dragable = null
+	
 	
 func can_take(dragble : DragableComponent) -> bool :
 	return current_dragable == null

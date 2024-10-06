@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkl133k6fd40f"]
+
+[ext_resource type="PackedScene" uid="uid://c3xe3l7n66kab" path="res://Prefab/Producers/fabric.tscn" id="1_jihho"]
+[ext_resource type="Script" path="res://Scripts/Production/ComponetCode/AddPowerComponent.gd" id="2_u6ixr"]
+
+[node name="PowerAdd" instance=ExtResource("1_jihho")]
+
+[node name="AddPowerComponent" type="Node" parent="." index="6" node_paths=PackedStringArray("_label")]
+script = ExtResource("2_u6ixr")
+_label = NodePath("../Label")
+
+[node name="Label" parent="." index="8"]
+text = "+4"

@@ -18,4 +18,6 @@ func _put_unit(unitNode : UnitNode) -> void:
 		unitNode.process_mode = Node.PROCESS_MODE_INHERIT
 		unitNode.visible = true
 		unitNode._target_pos = get_point()
+		unitNode.scale = Vector2.ZERO
+		unitNode.create_tween().tween_property(unitNode,"scale",Vector2.ONE,0.1)
 	_productor.on_unit_release.emit(unitNode)
