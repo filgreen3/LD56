@@ -4,6 +4,7 @@ static var instance : DragAndDropSystem
 
 @export var storage_system : ProductionStorageSystem
 @export var y_hights_point : int = 96
+@export var x_limit : int = 200
 
 signal on_take(dragable : DragableComponent)
 signal on_drop(dragable : DragableComponent)
@@ -55,7 +56,7 @@ func take(dragable : DragableComponent ) -> void :
 	current_dragable._productor.on_taken_to_drag.emit()
 
 func is_bad_place()->bool:
-	return !MoveLimitSystem.instance.is_in_limit(curr_pos) || current_dragable.is_overlapping()
+	return curr_pos.x > x_limit || !MoveLimitSystem.instance.is_in_limit(curr_pos) || current_dragable.is_overlapping()
 
 func drop() -> void :
 	if is_bad_place():

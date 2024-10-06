@@ -21,6 +21,7 @@ func _shacking() -> void:
 
 func _rotator_animation() -> void:
 	while true:
-		await get_tree().create_tween().tween_property(node_to_shake,"rotation",-max_angle, rotate_time).finished 
-		await get_tree().create_tween().tween_property(node_to_shake,"rotation",max_angle, rotate_time).finished 
+		if is_inside_tree():
+			await get_tree().create_tween().tween_property(node_to_shake,"rotation",-max_angle, rotate_time).finished 
+			await get_tree().create_tween().tween_property(node_to_shake,"rotation",max_angle, rotate_time).finished 
 	

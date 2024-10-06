@@ -11,13 +11,13 @@ static var instance : QuotaSystem
 
 signal quota_pass(quota : int)
 
-var current_quota : int = 5
+var current_quota : int = 1
 var display_quota : int :
 	set (value) :
 		display_quota = value
 		quota_lable.text = FancyNumber.format_number(display_quota) + " : Quota "
 		
-var max_quota : int = 10
+var max_quota : int = 1
 var levels_pass : int = 1 
 
 func get_current_level() -> int : return levels_pass
@@ -29,11 +29,11 @@ func _ready() -> void:
 
 func update_quota(score_added : int) -> void:
 	current_quota -= score_added
-	if current_quota < 0 :
+	if current_quota <= 0 :
 		current_quota = 0
 		levels_pass += 1
 		quota_pass.emit(max_quota)
-		max_quota = 5 + pow(levels_pass,levels_pass *0.1)
+		max_quota = 1 + pow(levels_pass,levels_pass *0.25)
 		current_quota = max_quota
 	if score_added < 0:
 		shock_animation(quota_lable_scale_parent)

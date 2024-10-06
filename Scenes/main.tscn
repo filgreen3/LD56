@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c60458q6q61od"]
+[gd_scene load_steps=27 format=3 uid="uid://c60458q6q61od"]
 
 [ext_resource type="Script" path="res://Scripts/Grid/GridSystem.gd" id="1_g2efd"]
 [ext_resource type="Texture2D" uid="uid://du31kcd836ggc" path="res://Sprites/Other/Patterns by Kenney/pattern_15.png" id="1_le6x0"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://3n0tw1igmbp3" path="res://Prefab/Producers/power_mul.tscn" id="16_nktsf"]
 [ext_resource type="Script" path="res://Scripts/Progress/EnemyGeneratorSystem.gd" id="17_ivjbn"]
 [ext_resource type="PackedScene" uid="uid://3y6y1esq8jkh" path="res://Prefab/Producers/t_shape.tscn" id="17_vl0yn"]
+[ext_resource type="Script" path="res://Scripts/Progress/restart_system.gd" id="21_ocjft"]
 
 [sub_resource type="Gradient" id="Gradient_ugcva"]
 offsets = PackedFloat32Array(0.00309598, 1)
@@ -100,6 +101,7 @@ script = ExtResource("1_g2efd")
 script = ExtResource("3_3g3xa")
 storage_system = NodePath("../ProductionStorageSystem")
 y_hights_point = 200
+x_limit = 272
 
 [node name="UnitProcessingSystem" type="Node" parent="Systems"]
 script = ExtResource("4_ne74q")
@@ -166,6 +168,10 @@ x_line = 344
 time_system = NodePath("../TimeSystem")
 quota_system = NodePath("../QuotaSystem")
 move_system = NodePath("../MoveLimitSystem")
+
+[node name="RestartSystem" type="Node" parent="Systems" node_paths=PackedStringArray("time_system")]
+script = ExtResource("21_ocjft")
+time_system = NodePath("../TimeSystem")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(176, 112)

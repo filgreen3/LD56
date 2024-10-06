@@ -8,7 +8,7 @@ class_name EnemyGeneratorSystem extends Node
 @export var quota_system : QuotaSystem
 @export var move_system : MoveLimitSystem
 
-func enemy_power_formule(level : int) -> int :  return pow(level, 1.5)
+func enemy_power_formule(level : int) -> int :  return pow(level, level*0.15)
 
 func get_power_for_enemy(level : int) -> int : return randi_range(enemy_power_formule(level)*0.3,enemy_power_formule(level)*1.2)
 
