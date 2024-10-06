@@ -16,7 +16,7 @@ var _comps : Array[ProducitonComponent]
 
 signal on_unit_put(unitNode : UnitNode)
 signal on_unit_release(unitNode : UnitNode)
-
+ 
 func _ready() -> void:
 	for child : Node in get_children() :
 		if child is ProducitonComponent : 

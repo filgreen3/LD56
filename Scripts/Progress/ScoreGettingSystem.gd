@@ -11,7 +11,8 @@ signal on_get_score(value : int)
 		current_score = value
 		score_lable.text = " Score : "+str(value)
 @export var quota_system : QuotaSystem
-@export var scale_shock : Vector2 = Vector2(0.7,1.2)
+@export var scale_shock : Vector2 = Vector2(1.2,1.2)
+@export var scale_shock_parent : Control
 
 func _ready() -> void:
 	instance = self
@@ -22,8 +23,8 @@ func add_score(power : int) -> void:
 	var final : int = current_score + power
 	create_tween().tween_property(self,"current_score", final, 0.5)
 	on_get_score.emit(power)
-	#shock_animation(score_lable)
+	shock_animation(scale_shock_parent)
 
 func shock_animation(control : Control) -> void:
-	await create_tween().tween_property(control,"scale",scale_shock,0.1)
-	await create_tween().tween_property(control,"scale",Vector2.ONE,0.5)
+	await create_tween().tween_property(control,"scale",scale_shock,0.1).finished
+	await create_tween().tween_property(control,"scale",Vector2.ONE,0.3).finished

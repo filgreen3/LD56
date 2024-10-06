@@ -47,6 +47,9 @@ func _process(delta: float) -> void:
 		if global_position.x > ScoreGettingSystem.instance.x_limit_to_score:
 			QuotaSystem.instance.update_quota(_power)
 			queue_free()
+		if _team != 0 && global_position.x < QuotaSystem.instance.x_limit_to_get_more_quota:
+			QuotaSystem.instance.update_quota(-_power)
+			queue_free()
 		on_target_reached.emit()
 
 func battle_handler() -> void:

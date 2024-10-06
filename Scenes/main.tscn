@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c60458q6q61od"]
+[gd_scene load_steps=24 format=3 uid="uid://c60458q6q61od"]
 
 [ext_resource type="Script" path="res://Scripts/Grid/GridSystem.gd" id="1_g2efd"]
 [ext_resource type="Texture2D" uid="uid://du31kcd836ggc" path="res://Sprites/Other/Patterns by Kenney/pattern_15.png" id="1_le6x0"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Units/UnitProcessingSystem.gd" id="4_ne74q"]
 [ext_resource type="Script" path="res://Scripts/Progress/ProductionStorageSystemProductionStorageSystem.gd" id="5_c43bn"]
 [ext_resource type="Script" path="res://Scripts/Progress/InitialProductions.gd" id="6_tcptn"]
+[ext_resource type="PackedScene" uid="uid://cqsncp7tfsh4w" path="res://Prefab/Units/enemy_01.tscn" id="6_y2kdx"]
 [ext_resource type="PackedScene" uid="uid://36vq01afsgu2" path="res://Prefab/Producers/map_upgrade_down.tscn" id="7_2geyp"]
 [ext_resource type="PackedScene" uid="uid://dkl133k6fd40f" path="res://Prefab/Producers/power_add.tscn" id="7_odafh"]
 [ext_resource type="PackedScene" uid="uid://bbr7l24fahmyq" path="res://Prefab/Producers/map_upgrade_up.tscn" id="8_wxjsg"]
@@ -17,6 +18,7 @@
 [ext_resource type="Script" path="res://Scripts/Progress/QuotaSystem.gd" id="12_acy2s"]
 [ext_resource type="Script" path="res://Scripts/Progress/RewardFromQuotaSystem.gd" id="13_ya41l"]
 [ext_resource type="Script" path="res://Scripts/Progress/TimeSystem.gd" id="14_xs5pf"]
+[ext_resource type="Script" path="res://Scripts/Progress/EnemyGeneratorSystem.gd" id="17_ivjbn"]
 
 [sub_resource type="Gradient" id="Gradient_ugcva"]
 offsets = PackedFloat32Array(0.00309598, 1)
@@ -126,16 +128,20 @@ line_high = NodePath("../../World/LineDown")
 y_low_limit = 79
 line_low = NodePath("../../World/LineUp")
 
-[node name="ScoreGettingSystem" type="Node" parent="Systems" node_paths=PackedStringArray("score_lable", "quota_system")]
+[node name="ScoreGettingSystem" type="Node" parent="Systems" node_paths=PackedStringArray("score_lable", "quota_system", "scale_shock_parent")]
 script = ExtResource("11_kknk6")
 x_limit_to_score = 352
-score_lable = NodePath("../../PanelContainer/ScoreLable")
+score_lable = NodePath("../../PanelContainer/ScoreParent2/SacleScore/ScoreLable")
 quota_system = NodePath("../QuotaSystem")
+scale_shock_parent = NodePath("../../PanelContainer/ScoreParent2/SacleScore")
 
-[node name="QuotaSystem" type="Node" parent="Systems" node_paths=PackedStringArray("score_system", "quota_lable")]
+[node name="QuotaSystem" type="Node" parent="Systems" node_paths=PackedStringArray("score_system", "quota_lable", "quota_lable_scale_parent")]
 script = ExtResource("12_acy2s")
 score_system = NodePath("../ScoreGettingSystem")
-quota_lable = NodePath("../../PanelContainer/QuotaLable")
+quota_lable = NodePath("../../PanelContainer/QuotaParent/SacleQuota/QuotaLable")
+scale_shock = Vector2(1.2, 1.2)
+quota_lable_scale_parent = NodePath("../../PanelContainer/QuotaParent/SacleQuota")
+red_color = Color(0.796078, 0.121569, 0.207843, 1)
 
 [node name="RewardFromQuotaSystem" type="Node" parent="Systems" node_paths=PackedStringArray("quota_system", "storage_system")]
 script = ExtResource("13_ya41l")
@@ -150,6 +156,14 @@ time_curve = SubResource("Curve_vf8u8")
 scale_time_parent = NodePath("../../PanelContainer/TimeParent/Scale")
 scale_shock = Vector2(1.2, 1.2)
 quota_system = NodePath("../QuotaSystem")
+
+[node name="EnemyGeneratorSystem" type="Node" parent="Systems" node_paths=PackedStringArray("time_system", "quota_system", "move_system")]
+script = ExtResource("17_ivjbn")
+enemy_prefab = ExtResource("6_y2kdx")
+x_line = 344
+time_system = NodePath("../TimeSystem")
+quota_system = NodePath("../QuotaSystem")
+move_system = NodePath("../MoveLimitSystem")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(176, 112)
@@ -166,14 +180,44 @@ grow_horizontal = 2
 pivot_offset = Vector2(61, 123)
 theme_override_styles/panel = SubResource("StyleBoxFlat_itr0c")
 
-[node name="ScoreLable" type="Label" parent="PanelContainer"]
+[node name="ScoreParent2" type="Control" parent="PanelContainer"]
 layout_mode = 2
+
+[node name="SacleScore" type="Control" parent="PanelContainer/ScoreParent2"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 26.0
+offset_top = 8.0
+offset_right = 26.0
+offset_bottom = 8.0
+
+[node name="ScoreLable" type="Label" parent="PanelContainer/ScoreParent2/SacleScore"]
+layout_mode = 2
+offset_left = -24.0
+offset_top = -8.0
+offset_right = 328.0
+offset_bottom = 8.0
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("11_w7i31")
 text = " Score : 10"
 
-[node name="QuotaLable" type="Label" parent="PanelContainer"]
+[node name="QuotaParent" type="Control" parent="PanelContainer"]
 layout_mode = 2
+
+[node name="SacleQuota" type="Control" parent="PanelContainer/QuotaParent"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 320.0
+offset_top = 8.0
+offset_right = 320.0
+offset_bottom = 8.0
+
+[node name="QuotaLable" type="Label" parent="PanelContainer/QuotaParent/SacleQuota"]
+layout_mode = 2
+offset_left = -320.0
+offset_top = -8.0
+offset_right = 32.0
+offset_bottom = 8.0
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("11_w7i31")
 text = "10 : Quota "

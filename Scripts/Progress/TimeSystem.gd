@@ -38,4 +38,4 @@ func start_timer() -> void:
 
 func shock_animation(control : Control) -> void:
 	await create_tween().tween_property(control,"scale",scale_shock,0.1).finished
-	await create_tween().tween_property(control,"scale",Vector2.ONE,0.9).finished
+	await create_tween().tween_property(control,"scale",Vector2.ONE,0.2).finished

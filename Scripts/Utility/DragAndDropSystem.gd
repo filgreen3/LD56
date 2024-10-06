@@ -54,7 +54,7 @@ func take(dragable : DragableComponent ) -> void :
 	on_take.emit(current_dragable)
 
 func is_bad_place()->bool:
-	return !MoveLimitSystem.instance.is_in_limit(curr_pos, 0, 10) || current_dragable.is_overlapping()
+	return !MoveLimitSystem.instance.is_in_limit(curr_pos) || current_dragable.is_overlapping()
 
 func drop() -> void :
 	if is_bad_place():
