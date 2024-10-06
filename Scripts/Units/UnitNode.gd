@@ -96,7 +96,7 @@ func check_for_empty_space() -> void:
 	await get_tree().create_timer(0.1).timeout
 	if check_if_next_is_enemy():
 		return
-	while _shape.is_colliding():
+	while _shape.is_colliding() && !check_if_next_is_enemy() :
 		get_new_target_pos()
 		if !_self_shape_cast.is_colliding():
 			await get_tree().create_timer(0.5).timeout

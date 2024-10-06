@@ -14,7 +14,7 @@ func get_power_for_enemy(level : int) -> int : return randi_range(enemy_power_fo
 
 func _ready() -> void:
 	while true :
-		await get_tree().create_timer(randf_range(5, 10)/(1+quota_system.levels_pass/20)).timeout
+		await get_tree().create_timer(randf_range(5, 10)/(1+quota_system.levels_pass)).timeout
 		#await get_tree().create_timer(1).timeout debug
 		spawn()
 		

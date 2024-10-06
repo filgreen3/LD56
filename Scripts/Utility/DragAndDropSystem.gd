@@ -66,7 +66,7 @@ func drop() -> void :
 			await get_tree().process_frame
 			current_dragable._move(remain_pos)
 		current_dragable._productor._put_on_map()
-		on_drop.emit(current_dragable)
+	on_drop.emit(current_dragable)
 	current_dragable = null
 	
 	

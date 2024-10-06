@@ -9,5 +9,10 @@ func _ready() -> void:
 
 func add_reward() -> void :
 	var new_factory : ProductionNode = (factory_array.pick_random() as PackedScene).instantiate() as ProductionNode
+	new_factory.global_position = storage_system.center_position - Vector2.RIGHT*300
 	add_child(new_factory)
 	storage_system.add_factory(new_factory)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey && (event as InputEventKey).keycode == KEY_0:
+		add_reward()
