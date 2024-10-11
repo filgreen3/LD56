@@ -5,10 +5,15 @@
 
 [node name="PowerAdd" instance=ExtResource("1_5v6md")]
 
-[node name="MulPowerComponent" type="Node" parent="." index="5" node_paths=PackedStringArray("_label")]
+[node name="ProductionProgressBar" parent="." index="3"]
+_time_to_process = 1.0
+
+[node name="MulPowerComponent" type="Node" parent="." index="5" node_paths=PackedStringArray("_label", "progress_bar")]
 script = ExtResource("3_enfrn")
 _label = NodePath("../Label")
 _mul_value = 2
+progress_bar = NodePath("../ProductionProgressBar")
+_time_to_process = 1.0
 
 [node name="Label" parent="." index="9"]
 text = "+4"

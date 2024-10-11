@@ -6,7 +6,7 @@ class_name SimpleOutputComponent extends OutPutComponent
 var stored_point : Vector2 
 
 signal on_releas
-func _put_unit(unitNode : UnitNode) -> void:
+func _put_unit(unitNode : UnitNode, current_comp_id : int) -> void:
 	var targetObj : ProductionNode
 	if point_cast_2 == null || randf() > 0.5:
 		var t : int = point_cast.collision_result.size()
@@ -20,7 +20,11 @@ func _put_unit(unitNode : UnitNode) -> void:
 		stored_point = point_cast_2.global_position	
 	
 	if targetObj != null && targetObj != _productor:
-		targetObj._put_unit(unitNode)
+		if targetObj.can_take_unit():
+			targetObj._put_unit(unitNode)
+		else:
+			await targetObj.on_unit_release
+			targetObj._put_unit(unitNode)
 	else :
 		on_releas.emit()
 		unitNode.global_position = stored_point
@@ -30,3 +34,5 @@ func _put_unit(unitNode : UnitNode) -> void:
 		unitNode.scale = Vector2.ZERO
 		unitNode.create_tween().tween_property(unitNode,"scale",Vector2.ONE,0.1)
 	_productor.on_unit_release.emit(unitNode)
+	_productor.current_unit = null
+

@@ -5,9 +5,14 @@
 
 [node name="PowerAdd" instance=ExtResource("1_jihho")]
 
-[node name="AddPowerComponent" type="Node" parent="." index="6" node_paths=PackedStringArray("_label")]
+[node name="ProductionProgressBar" parent="." index="3"]
+_time_to_process = 1.0
+
+[node name="AddPowerComponent" type="Node" parent="." index="5" node_paths=PackedStringArray("_label", "progress_bar")]
 script = ExtResource("2_u6ixr")
 _label = NodePath("../Label")
+progress_bar = NodePath("../ProductionProgressBar")
+_time_to_process = 1.0
 
-[node name="Label" parent="." index="8"]
+[node name="Label" parent="." index="9"]
 text = "+4"

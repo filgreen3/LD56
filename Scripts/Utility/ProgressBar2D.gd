@@ -6,5 +6,5 @@ class_name ProgressBar2D extends Node2D
 	set(val):
 		value = clampf(val,0,1)
 		front_bar.position = Vector2.RIGHT * lerpf(-bar_size, 0, value)
-		visible = value > 0.01
+		visible = value > 0.001
 	 

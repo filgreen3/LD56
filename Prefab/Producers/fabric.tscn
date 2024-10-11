@@ -63,7 +63,6 @@ max_angle = 0.05
 [node name="ProductionProgressBar" type="Node" parent="." node_paths=PackedStringArray("progress_bar")]
 script = ExtResource("6_c01j6")
 progress_bar = NodePath("../Graphic/ProgressBar2D")
-time_def = 1.0
 
 [node name="DragableComponent" type="Node" parent="." node_paths=PackedStringArray("area")]
 script = ExtResource("8_pig8v")

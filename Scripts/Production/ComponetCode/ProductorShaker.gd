@@ -12,8 +12,11 @@ class_name ProductorShaker extends ProducitonComponent
 
 func _init_production(productor : ProductionNode) -> void:
 	super._init_production(productor)
-	_productor.on_unit_put.connect(_shacking.unbind(1))
 	_rotator_animation()
+	
+func _put_unit(unitNode : UnitNode, current_comp_id : int) -> void:
+	_shacking()
+	super._put_unit(unitNode,current_comp_id)
 
 func _shacking() -> void:
 	await get_tree().create_tween().tween_property(node_to_shake,"scale",max_scale,attack_time).finished 
